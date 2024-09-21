@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import grapesjs from "grapesjs";
 import "grapesjs/dist/css/grapes.min.css";
 import { saveProject, loadProject } from "../store/editorSlice";
+import { saveAs } from "file-saver";
+import "../css/editor.css"; // Importa il file CSS correttamente
 
 const GrapesJSEditor = () => {
   const editorRef = useRef(null);
@@ -77,63 +79,101 @@ const GrapesJSEditor = () => {
     editor.setStyle(css);
   };
 
+  //funzione per scaricare il template come file HTML
+  const downloadHtmlFile = () => {
+    const editor = editorRef.current;
+    const html = editor.getHtml();
+    const css = editor.getCss();
+    const fullHtml = `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>${css}</style>
+  </head>
+  <body>${html}</body>
+  </html>
+  `;
+    const blob = new Blob([fullHtml], { type: "text/html" });
+    saveAs(blob, "template.html");
+  };
+
+  // funzione per scaricare il template come file word
+
+  const downloadWordFile = () => {
+    const editor = editorRef.current;
+    const html = editor.getHtml();
+    const css = editor.getCss();
+    const fullHtml = `
+  <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+    <head><meta charset="utf-8"><title>Document</title><style>${css}</style></head>
+    <body>${html}</body>
+  </html>
+`;
+    const blob = new Blob([fullHtml], { type: "application/msword" });
+    saveAs(blob, "template.doc");
+  };
+
+  // funzione per caricare un file HTML nell'interfaccia
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const content = e.target.result;
+      const editor = editorRef.current;
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(content, "text/html");
+      const htmlContent = doc.body.innerHTML;
+      const cssContent = doc.querySelector("style")
+        ? doc.querySelector("style").innerHTML
+        : "";
+
+      editor.setComponents(htmlContent);
+      editor.setStyle(cssContent);
+    };
+
+    reader.readAsText(file);
+  };
+
   return (
-    <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
-      {/* Container per il Block Manager */}
-      <div
-        id="blocks"
-        style={{
-          width: "250px",
-          backgroundColor: "#f0f0f0",
-          padding: "10px",
-          borderRight: "1px solid #ddd",
-          overflowY: "auto",
-        }}
-      ></div>
-
-      {/* Container dell'editor GrapesJS */}
-      <div id="gjs" style={{ flex: 1, border: "1px solid #ddd" }}></div>
-
-      {/* Pulsanti di controllo */}
-      <div
-        style={{
-          width: "150px",
-          backgroundColor: "#f7f7f7",
-          padding: "10px",
-          borderLeft: "1px solid #ddd",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <button
-          onClick={handleSave}
-          style={{
-            marginBottom: "10px",
-            padding: "10px 20px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
+    <div className="editor-container">
+      {" "}
+      {/* Use the class name here */}
+      <div className="block-manager" id="blocks">
+        {" "}
+        {/* Block manager styling */}
+        {/* Content for block manager */}
+      </div>
+      <div className="gjs-editor" id="gjs">
+        {" "}
+        {/* GrapesJS editor area */}
+        {/* GrapesJS editor content */}
+      </div>
+      <div className="control-panel">
+        {" "}
+        {/* Control panel styling */}
+        <button className="btn-control" onClick={handleSave}>
           Save
         </button>
-        <button
-          onClick={handleLoad}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#28a745",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
+        <button className="btn-control" onClick={handleLoad}>
           Load
         </button>
+        <button className="btn-control" onClick={downloadHtmlFile}>
+          Download HTML
+        </button>
+        <button className="btn-control" onClick={downloadWordFile}>
+          Download Word
+        </button>
+        <input
+          type="file"
+          accept=".html"
+          onChange={handleFileUpload}
+          className="file-upload" // Styled file upload input
+        />
       </div>
     </div>
   );

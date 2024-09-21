@@ -1,0 +1,110 @@
+/* editor.css */
+
+/* Overall container styling */
+.editor-container {
+    display: flex;
+    height: 100vh;
+    background-color: #f4f4f4; /* Soft light gray background for a neutral feel */
+  }
+  
+  /* Block manager styling */
+  .block-manager {
+    width: 320px; /* Slightly wider for better usability */
+    padding: 20px;
+    background-color: #ffffff; /* White background for contrast */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* More pronounced shadow for depth */
+    overflow-y: auto; /* Allow scrolling if necessary */
+    border-right: 1px solid #e0e0e0; /* Light border for subtle separation */
+    border-radius: 10px 0 0 10px; /* Rounded corners on the left */
+  }
+  
+  /* GrapesJS editor area */
+  .gjs-editor {
+    flex: 1; /* Fill remaining space */
+    border: 1px solid #e0e0e0; /* Soft border */
+    margin: 10px; /* Consistent margin */
+    border-radius: 0 10px 10px 0; /* Rounded corners on the right */
+    background-color: #ffffff; /* White background for a clean look */
+  }
+  
+  /* Control panel styling */
+  .control-panel {
+    padding: 20px;
+    background-color: #ffffff; /* White background for consistency */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-left: 1px solid #e0e0e0; /* Light border for separation */
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1); /* More depth */
+    border-radius: 0 10px 10px 0; /* Rounded corners on the right */
+  }
+  
+  /* Button styling */
+  .btn-control {
+    padding: 12px 24px; /* Comfortable padding */
+    margin-bottom: 15px; /* Space between buttons */
+    font-size: 16px; /* Consistent font size */
+    font-weight: 600; /* Bold text for prominence */
+    color: #ffffff; /* White text for contrast */
+    background-color: #007bff; /* Vibrant blue for action buttons */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease, transform 0.2s; /* Smooth transitions */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  /* Button hover effects */
+  .btn-control:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+  }
+  
+  /* Button focus effect */
+  .btn-control:focus {
+    outline: none; /* No outline */
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.5); /* Blue focus outline */
+  }
+  
+  /* Block manager text styling */
+  .block-manager h1, 
+  .block-manager p, 
+  .block-manager img {
+    margin-bottom: 15px; /* Consistent spacing */
+    color: #333; /* Darker text for readability */
+  }
+  
+  /* Block styling */
+  .block-manager .gjs-block {
+    border: 1px solid #e0e0e0; /* Subtle border */
+    padding: 10px; /* Inner padding */
+    margin-bottom: 10px; /* Space between blocks */
+    border-radius: 5px; /* Slightly rounded corners */
+    transition: background-color 0.2s ease, transform 0.2s; /* Smooth transitions */
+  }
+  
+  /* Block hover effect */
+  .block-manager .gjs-block:hover {
+    background-color: #f0f0f0; /* Light gray on hover */
+    cursor: pointer; /* Pointer cursor */
+    transform: translateY(-1px); /* Slight lift effect */
+  }
+  
+  /* File upload input styling */
+  .file-upload {
+    margin-top: 20px; /* Space above input */
+    padding: 10px 0; /* Padding for input */
+    width: 100%; /* Full width */
+    border: 1px solid #e0e0e0; /* Subtle border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background */
+    transition: border-color 0.3s ease; /* Smooth border transition */
+  }
+  
+  /* File upload input focus effect */
+  .file-upload:focus {
+    outline: none; /* No outline */
+    border-color: #007bff; /* Blue border on focus */
+  }
+  
