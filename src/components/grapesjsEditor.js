@@ -60,6 +60,49 @@ const GrapesJSEditor = () => {
         content: '<img src="https://via.placeholder.com/350x350" alt="Image"/>',
         category: "Basic",
       });
+      editor.BlockManager.add("block-title", {
+        label: "Titolo",
+        content: "<h1>Inserisci il tuo titolo qui</h1>",
+        category: "Testo",
+      });
+
+      editor.BlockManager.add("block-subtitle", {
+        label: "Sottotitolo",
+        content: "<h2>Inserisci il tuo sottotitolo qui</h2>",
+        category: "Testo",
+      });
+
+      editor.BlockManager.add("block-qrcode", {
+        label: "QR Code",
+        content:
+          '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=YourData" alt="QR Code" />',
+        category: "Immagini",
+      });
+
+      editor.BlockManager.add("block-logo", {
+        label: "Logo",
+        content: '<img src="https://via.placeholder.com/150x50" alt="Logo" />',
+        category: "Immagini",
+      });
+
+      editor.BlockManager.add("block-social-media", {
+        label: "Icone Social Media",
+        content: `
+          <div style="display: flex; gap: 10px;">
+            <a href="#" target="_blank"><img src="https://via.placeholder.com/30x30?text=FB" alt="Facebook" /></a>
+            <a href="#" target="_blank"><img src="https://via.placeholder.com/30x30?text=TW" alt="Twitter" /></a>
+            <a href="#" target="_blank"><img src="https://via.placeholder.com/30x30?text=IG" alt="Instagram" /></a>
+          </div>
+        `,
+        category: "Social",
+      });
+
+      editor.BlockManager.add("block-html-embed", {
+        label: "Embed HTML",
+        content:
+          '<textarea placeholder="Inserisci il tuo codice HTML qui" rows="4" style="width: 100%;"></textarea>',
+        category: "Custom",
+      });
     }
   }, [html, css]);
 
