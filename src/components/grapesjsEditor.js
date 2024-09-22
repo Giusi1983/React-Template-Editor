@@ -104,15 +104,49 @@ const GrapesJSEditor = () => {
     const editor = editorRef.current;
     const html = editor.getHtml();
     const css = editor.getCss();
-    dispatch(saveProject({ html, css }));
-  };
+    // dispatch(saveProject({ html, css }));
 
-  const handleLoad = () => {
-    dispatch(loadProject({ html, css }));
-    const editor = editorRef.current;
-    editor.setComponents(html);
-    editor.setStyle(css);
+    // per salvare il progetto nel backend
+    const project = { name: "Nuovo Template", html, css }; 
+
+    try {
+      const response = await fetch("http://localhost:5000/templates", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" ,
+    },
+    body: JSON.stringify(project),
+  });
+
+  if(response.ok) {
+    const data = await response.json();
+    dispatch(saveProject({ html, css }));
+    console.log('Template salvato:', data);
+  }else {
+    console.error('Errore nel salvataggio del template');
+  }
+} catch (error) {
+  console.error('Errore nella richiesta:', error);
+}
+};
+
+  const handleLoad = async () => {
+    // carica i template dal backend
+    try {
+      const response = await fetch("http://localhost:5000/templates");
+      const templates = await response.json();
+
+      if(templates.length > 0) {
+        const latestTemplate = templates[templates.length - 1];
+        dispatch(loadProject({ html: latestTemplate.html, css: latestTemplate.css}));
+        const editor = editorRef.current;
+        editor.setComponents(latestTemplate.html);
+        editor.setStyle(latestTemplate.css);
+      }
+    } catch (error) {
+      console.error('Errore nel caricamento dei template:', error);
+    }
   };
+    
 
   const downloadHtmlFile = () => {
     const editor = editorRef.current;
